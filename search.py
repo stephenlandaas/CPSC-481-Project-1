@@ -87,6 +87,43 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+
+    # Keep track of which (x, y) positions we've already visited
+    visited = []
+    # Stack data structure for our DFS implementation
+    # Each entry will hold ( (x, y), actionsList), where (x, y) is the current position, 
+    # and actionsList is the actions needed to reach the goal) 
+    stack = util.Stack()
+
+    # Variables to hold the node we're currently at, as well as a continually-updated list of actions
+    currentPos = problem.getStartState()
+    actionsList = []
+
+    if (problem.isGoalState(currentPos)):
+        # No list of actions to return, we're already at the goal state
+        return actionsList
+    else:
+        stack.push((currentPos, actionsList))
+    
+    while (not stack.isEmpty()):
+        # Get the current pos and the actions it took to get there from our stack
+        currentPos, actionsList = stack.pop()
+
+        # If the current position node hasn't been visited, mark it as visited
+        if (currentPos not in visited):
+            visited.append(currentPos)
+
+            # If this positional node is our goal state, we're done, return the actions list
+            if problem.isGoalState(currentPos):
+                return actionsList
+            else:
+                # Update our stack with the successors of our current node
+                for nextPos, action, cost in problem.getSuccessors(currentPos):
+                    # For each successor, push a tuple consisting of that successor's
+                    # (x, y) position, as well as an updated actionsList it will take
+                    # to reach that node.
+                    stack.push((nextPos, actionsList + [action]))
+        
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
