@@ -128,7 +128,42 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    # Keep track of which (x, y) positions we've already visited
+    visited = []
+
+    # Queue data structure for our BFS implementation
+    # Each entry will hold ( (x, y), actionsList), where (x, y) is the current position, 
+    # and actionsList is the actions needed to reach the goal) 
+    queue = util.Queue()
+
+    # Variables to hold the node we're currently at, as well as a continually-updated list of actions
+    currentPos = problem.getStartState()
+    actionsList = []
+
+    if (problem.isGoalState(currentPos)):
+        # No list of actions to return, we're already at the goal state
+        return actionsList
+    else:
+        queue.push((currentPos, actionsList))
+
+    while (not queue.isEmpty()):
+    # Get the current pos and the actions it took to get there from our queue
+        currentPos, actionsList = queue.pop()
+        # If the current position node hasn't been visited, mark it as visited
+        if (currentPos not in visited):
+            visited.append(currentPos)
+
+            # If this positional node is our goal state, we're done, return the actions list
+            if problem.isGoalState(currentPos):
+                return actionsList
+            else:
+                # Update our queue with the successors of our current node
+                for nextPos, action, cost in problem.getSuccessors(currentPos):
+                    # For each successor, push a tuple consisting of that successor's
+                    # (x, y) position, as well as an updated actionsList it will take
+                    # to reach that node.
+                    queue.push((nextPos, actionsList + [action]))
+
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
