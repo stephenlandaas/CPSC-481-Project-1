@@ -117,11 +117,11 @@ def depthFirstSearch(problem):
                 return actionsList
             else:
                 # Update our stack with the successors of our current node
-                for nextPos, action, cost in problem.getSuccessors(currentPos):
+                for nextPos, nextAction, nextCost in problem.getSuccessors(currentPos):
                     # For each successor, push a tuple consisting of that successor's
                     # (x, y) position, as well as an updated actionsList it will take
                     # to reach that node.
-                    stack.push((nextPos, actionsList + [action]))
+                    stack.push((nextPos, actionsList + [nextAction]))
         
     util.raiseNotDefined()
 
@@ -157,11 +157,11 @@ def breadthFirstSearch(problem):
                 return actionsList
             else:
                 # Update our queue with the successors of our current node
-                for nextPos, action, cost in problem.getSuccessors(currentPos):
+                for nextPos, nextAction, nextCost in problem.getSuccessors(currentPos):
                     # For each successor, push a tuple consisting of that successor's
                     # (x, y) position, as well as an updated actionsList it will take
                     # to reach that node.
-                    queue.push((nextPos, actionsList + [action]))
+                    queue.push((nextPos, actionsList + [nextAction]))
 
     util.raiseNotDefined()
 
